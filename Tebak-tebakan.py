@@ -15,23 +15,23 @@ class MyClient(discord.Client):
         if message.author.id == self.user.id:
             return
 
-        if message.content.startswith('$guess'):
-            await message.channel.send('Guess a number between 1 and 10.')
+        if message.content.startswith('$tebak'):
+            await message.channel.send('Tebak angka 1 sampai 10.')
 
-            def is_correct(m):
-                return m.author == message.author and m.content.isdigit()
+            def benar(btul):
+                return btul.author == message.author and btul.content.isdigit()
 
-            answer = random.randint(1, 10)
+            angka = random.randint(1, 10)
 
             try:
-                guess = await self.wait_for('message', check=is_correct, timeout=5.0)
+                tebak = await self.wait_for('message', check=benar, timeout=5.0)
             except asyncio.TimeoutError:
-                return await message.channel.send(f'Sorry, you took too long it was {answer}.')
+                return await message.channel.send(f'lama amat tinggal jawab.')
 
-            if int(guess.content) == answer:
-                await message.channel.send('You are right!')
+            if int(tebak.content) == angka:
+                await message.channel.send('kamu benar!')
             else:
-                await message.channel.send(f'Oops. It is actually {answer}.')
+                await message.channel.send(f'Kamu salah, yang bener {angka}.')
 
 
 intents = discord.Intents.default()
